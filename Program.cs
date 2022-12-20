@@ -45,13 +45,14 @@
                 }
             }
 
-            // Calculate the slope and r^2 of the line through the 10 data points
+            // Check if list has more than 10 measurements, if it does, remove the ones at index 0 (which would be the oldest)
             if (ETCO2_Measurements.Count > 10)
             {
                 ETCO2_Measurements.RemoveAt(0);
             }
             else
             {
+                // loop through each index of the list of measurements and add the total minutes to sumX and the total measurements to sumY
                 double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
                 for (int i = 0; i < 10; i++)
                 {
@@ -62,10 +63,12 @@
                     sumY2 += ETCO2_Measurements[i].ETCO2_Value * ETCO2_Measurements[i].ETCO2_Value;
                 }
 
+                // calculate the formulas for r^2 and slope
                 double r2 = ((10*sumXY) - (sumX*sumY)) / Math.Sqrt((10 * sumX2 - sumX * sumX) * (10 * sumY2 - sumY * sumY));
 
                 double slope = ((10 * sumXY) - (sumX * sumY)) / ((10 * sumX2) - (sumX * sumX));
 
+                // if the slope is greater than 1.5 AND r^2 is greater than 0.64, sound the alarm.
                 if (slope > 1.5 && r2 > 0.64)
                 {
                     Alarm();
