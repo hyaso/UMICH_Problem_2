@@ -35,16 +35,7 @@
             // initialize max ETCO2 to first index in list
             ETCO2 maxETCO2 = ETCO2_Measurements[0];
 
-            // Loop through list and check if there is a value greater than what we have the max value saved as
-            // If there is, then set that as the max value.
-            foreach (ETCO2 m in ETCO2_Measurements)
-            {
-                if (m.ETCO2_Value > maxETCO2.ETCO2_Value)
-                {
-                    maxETCO2 = m;
-                }
-            }
-
+            
             // Check if list has more than 10 measurements, if it does, remove the ones at index 0 (which would be the oldest)
             if (ETCO2_Measurements.Count > 10)
             {
@@ -52,6 +43,16 @@
             }
             else
             {
+                // Loop through list and check if there is a value greater than what we have the max value saved as
+                // If there is, then set that as the max value.
+                foreach (ETCO2 m in ETCO2_Measurements)
+                {
+                    if (m.ETCO2_Value > maxETCO2.ETCO2_Value)
+                    {
+                        maxETCO2 = m;
+                    }
+                }
+
                 // loop through each index of the list of measurements and add the total minutes to sumX and the total measurements to sumY
                 double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
                 for (int i = 0; i < 10; i++)
